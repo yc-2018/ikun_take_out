@@ -82,7 +82,7 @@ public class EmployeeController {
         log.info("新增员工:{}", employee);
 
         //设置初始密码12345，用md5加密
-        employee.setPassword(DigestUtils.md5DigestAsHex("12345".getBytes()));
+        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
         employee.setCreateTime(LocalDateTime.now());
         employee.setUpdateTime(LocalDateTime.now());
 
@@ -122,6 +122,23 @@ public class EmployeeController {
         employeeService.page(pageInfo, queryWrapper);   //因为是穿地址，pageInfo就不用再接收返回的值了
 
         return R.success(pageInfo);
+    }
+
+
+    /**
+     * 根据id修改员工信息
+     * @param employee 员工数据
+     * @return 成功信息
+     */
+    @PutMapping
+    public R<String> update(HttpServletRequest request, @RequestBody Employee employee) {
+        log.info("提交过来的要修改的员工:{}",employee);
+
+        Long empId = (Long) request.getSession().getAttribute("employee");
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(empId);
+        employeeService.updateById(employee);   //动态更新SQL语句。这个方法会更新实体对象中非空属性对应的数据库字段。
+        return R.success("修改成功啦");
     }
 
 }
