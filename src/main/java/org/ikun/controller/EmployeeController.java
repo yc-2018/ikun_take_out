@@ -83,14 +83,14 @@ public class EmployeeController {
 
         //设置初始密码12345，用md5加密
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
+        //employee.setCreateTime(LocalDateTime.now());
+        //employee.setUpdateTime(LocalDateTime.now());
 
         //获取当前登录用户的id（创建人id）
-        Long empId = (Long) request.getSession().getAttribute("employee");
+        //Long empId = (Long) request.getSession().getAttribute("employee");
 
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
+        //employee.setCreateUser(empId);
+        //employee.setUpdateUser(empId);
 
         employeeService.save(employee);
         return R.success("新增员工成功");
@@ -126,7 +126,7 @@ public class EmployeeController {
 
 
     /**
-     * 根据id修改员工信息
+     * 根据id修改员工信息（这里有个问题就是只是前端做了校验只允许admin修改状态，但是后端这里没有写判断，修改其他也是没有判断随便用接口工具都能乱改）
      * @param employee 员工数据
      * @return 成功信息
      */
@@ -134,9 +134,9 @@ public class EmployeeController {
     public R<String> update(HttpServletRequest request, @RequestBody Employee employee) {
         log.info("提交过来的要修改的员工:{}",employee);
 
-        Long empId = (Long) request.getSession().getAttribute("employee");
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(empId);
+        //Long empId = (Long) request.getSession().getAttribute("employee");
+        //employee.setUpdateTime(LocalDateTime.now());
+        //employee.setUpdateUser(empId);
         employeeService.updateById(employee);   //动态更新SQL语句。这个方法会更新实体对象中非空属性对应的数据库字段。
         return R.success("修改成功啦");
     }
