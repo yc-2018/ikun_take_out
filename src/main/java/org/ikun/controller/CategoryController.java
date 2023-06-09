@@ -10,6 +10,9 @@ import org.ikun.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 分类控制层
+ */
 @RestController
 @RequestMapping("/category")
 @Slf4j
@@ -48,5 +51,31 @@ public class CategoryController {
         //分页查询
         categoryService.page(pageInfo,queryWrapper);
         return R.success(pageInfo);
+    }
+
+    /**
+     * 根据id商场分类
+     * @param id 前端传过来的id
+     * @return 简单的成功信息
+     */
+    @DeleteMapping
+    public R<String> delete(@RequestParam("ids") Long id) {
+        log.info("准备删除分类id:{}",id);
+
+        categoryService.remove(id);
+        return R.success("分类信息删除成功");
+    }
+
+    /**
+     * 根据id修改分类信息
+     * @param category 要修改的分类
+     * @return 简单的完成提醒信息
+     */
+    @PutMapping
+    public R<String> update(@RequestBody Category category) {
+        log.info("修改分类信息是:{}",category);
+
+        categoryService.updateById(category);
+        return R.success("修改分类成功");
     }
 }

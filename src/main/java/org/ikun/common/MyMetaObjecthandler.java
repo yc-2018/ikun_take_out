@@ -23,6 +23,13 @@ public class MyMetaObjecthandler implements MetaObjectHandler {
         metaObject.setValue("updateTime", LocalDateTime.now());
 //        metaObject.setValue("ikun", "测试......");//类不存在的属性------会报错
 //        log.info("ikun.text");
+        /*
+        * 如果您的类中新增了一个公共字段属性，需要在插入和更新时进行自动填充，可以将代码修改如下：
+        * 首先，在insertFill()方法中添加对新字段的赋值，注意使用 if (metaObject.hasSetter("newField")) 判断是否存在该属性的 setter 方法，从而避免报错。
+        * if (metaObject.hasSetter("newField")) {
+        *     metaObject.setValue("newField", "默认值或其他逻辑");
+        * }
+        * */
         metaObject.setValue("createUser", BaseContext.getCurrentId());
         metaObject.setValue("updateUser", BaseContext.getCurrentId());
     }
