@@ -16,7 +16,7 @@ public class R<T> {
     private Map map = new HashMap(); //动态数据
 
     public static <T> R<T> success(T object) {
-        R<T> r = new R<T>();
+        R<T> r = new R<>();
         r.data = object;
         r.code = 1;
         return r;

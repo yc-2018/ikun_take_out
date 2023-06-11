@@ -10,6 +10,8 @@ import org.ikun.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 分类控制层
  */
@@ -77,5 +79,19 @@ public class CategoryController {
 
         categoryService.updateById(category);
         return R.success("修改分类成功");
+    }
+
+    /**
+     * 根据条件查询分类数据
+     * @param category 只要里面的type
+     */
+    @GetMapping("/list")
+    public R<List<Category>> list(Category category) {
+        //条件构造器
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(category.getType()!=null, Category::getType, category.getType());
+        queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
+
+        return R.success(categoryService.list(queryWrapper));
     }
 }
