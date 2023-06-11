@@ -68,7 +68,7 @@ public class DishController {
         //执行分页查询
         dishService.page(pageInfo, queryWrapper);
 
-        //对象拷贝----把pageInfo的属性值拷贝到dishDtopage但是不拷贝"records"属性
+        //对象拷贝----把pageInfo的属性值拷贝到dishDtoPage但是不拷贝"records"属性
         BeanUtils.copyProperties(pageInfo,dishDtopage,"records");
 
         List<Dish> records = pageInfo.getRecords();
