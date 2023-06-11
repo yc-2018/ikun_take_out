@@ -90,4 +90,27 @@ public class DishController {
         return R.success(dishDtopage);
     }
 
+    /**
+     * @param id 菜品id
+     * @return 菜品和口味信息
+     */
+    @GetMapping("/{id}")
+    public R<DishDto> get(@PathVariable Long id) {
+        DishDto dishDto = dishService.getByIdWithFlavor(id);
+
+        return R.success(dishDto);
+    }
+
+    /**
+     * 新增菜品
+     * @param dishDto 菜品实体类没有口味  所以要用到dto
+     * @return 成功信息
+     */
+    @PutMapping
+    public R<String> update(@RequestBody DishDto dishDto) {
+        log.info("修改菜品啦:{}",dishDto);
+        dishService.updateWithFlavor(dishDto);
+        return R.success("修改菜品成功");
+    }
+
 }
