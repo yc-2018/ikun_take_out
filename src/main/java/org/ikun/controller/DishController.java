@@ -113,4 +113,25 @@ public class DishController {
         return R.success("修改菜品成功");
     }
 
+
+    /**
+     * 获取菜品分类到套餐页面
+     * @param dish 只要拿分类id   # 应该还有名字
+     * @return 菜品列表
+     */
+    @GetMapping("/list")
+    public R<List<Dish>> list(Dish dish) {
+        //条件构造器
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+        //按名字搜索?
+        queryWrapper.like(dish.getName() != null, Dish::getName, dish.getName());
+        queryWrapper.eq(Dish::getStatus, 1);//只查询状态为1的（起售 的菜品)
+        queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+
+        List<Dish> list = dishService.list(queryWrapper);
+
+        return R.success(list);
+    }
+
 }
