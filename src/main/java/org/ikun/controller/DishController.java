@@ -30,8 +30,6 @@ public class DishController {
     private DishService dishService;
     @Autowired
     public CategoryService categoryService;
-    @Autowired
-    private DishFlavorService dishFlavorService;
 
 
     /**
