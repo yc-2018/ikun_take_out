@@ -2,24 +2,18 @@
 package org.ikun.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.ikun.common.CustomException;
-import org.ikun.common.R;
 import org.ikun.dto.SetmealDto;
-import org.ikun.entity.Category;
 import org.ikun.entity.Setmeal;
 import org.ikun.entity.SetmealDish;
 import org.ikun.mapper.SetmealMapper;
-import org.ikun.service.CategoryService;
 import org.ikun.service.SetmealDishService;
 import org.ikun.service.SetmealService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,9 +67,5 @@ public class SetmealImpl extends ServiceImpl<SetmealMapper, Setmeal> implements 
         LambdaQueryWrapper<SetmealDish> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.in(SetmealDish::getSetmealId, ids);
         setmealDishService.remove(lambdaQueryWrapper);
-
-
     }
-
-
 }
