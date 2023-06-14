@@ -9,7 +9,6 @@ import org.ikun.dto.SetmealDto;
 import org.ikun.entity.Category;
 import org.ikun.entity.Setmeal;
 import org.ikun.service.CategoryService;
-import org.ikun.service.SetmealDishService;
 import org.ikun.service.SetmealService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,5 +79,18 @@ public class SetmealController {
         dtoPage.setRecords(list);
 
         return R.success(setmealPage);
+    }
+
+    /**
+     * 批量/删除套餐
+     * 不能简单就删套餐表，还有菜品关联表，还要判断是不是停售（停售才允许删）
+     * @param ids 套餐id（可以多个）
+     * @return 简单提示
+     */
+    @DeleteMapping
+    public R<String> delete(@RequestParam("ids")List<Long> ids) {
+        log.info("准备要删除的套餐id有:{}",ids);
+        setmealService.removeWithDish(ids);
+        return R.success("删除套餐成功");
     }
 }
