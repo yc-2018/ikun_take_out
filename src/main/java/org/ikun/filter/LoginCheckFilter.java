@@ -77,8 +77,9 @@ public class LoginCheckFilter implements Filter {
 
     /**
      * 路径匹配，检查本次请求是否放行
-     * @param requestURI
-     * @return
+     * @param requestURI 前端请求的URI
+     * @param urls 定义好的放行数组
+     * @return 放行？
      */
     private boolean check(String[] urls, String requestURI) {
         for (String url : urls) {
