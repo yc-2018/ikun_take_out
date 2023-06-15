@@ -8,6 +8,7 @@ import org.ikun.common.R;
 import org.ikun.dto.DishDto;
 import org.ikun.entity.Category;
 import org.ikun.entity.Dish;
+import org.ikun.entity.DishFlavor;
 import org.ikun.service.CategoryService;
 import org.ikun.service.DishFlavorService;
 import org.ikun.service.DishService;
@@ -30,6 +31,8 @@ public class DishController {
     private DishService dishService;
     @Autowired
     public CategoryService categoryService;
+    @Autowired
+    public DishFlavorService dishFlavorService;
 
 
     /**
@@ -112,13 +115,33 @@ public class DishController {
     }
 
 
+//    /**
+//     * 获取菜品分类到套餐页面
+//     * @param dish 只要拿分类id   # 应该还有名字
+//     * @return 菜品列表
+//     */
+//    @GetMapping("/list")
+//    public R<List<Dish>> list(Dish dish) {
+//        //条件构造器
+//        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+//        queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+//        //按名字搜索?
+//        queryWrapper.like(dish.getName() != null, Dish::getName, dish.getName());
+//        queryWrapper.eq(Dish::getStatus, 1);//只查询状态为1的（起售 的菜品)
+//        queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+//
+//        List<Dish> list = dishService.list(queryWrapper);
+//
+//        return R.success(list);
+//    }
+
     /**
      * 获取菜品分类到套餐页面
      * @param dish 只要拿分类id   # 应该还有名字
      * @return 菜品列表
      */
     @GetMapping("/list")
-    public R<List<Dish>> list(Dish dish) {
+    public R<List<DishDto>> list(Dish dish) {
         //条件构造器
         LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
@@ -129,7 +152,26 @@ public class DishController {
 
         List<Dish> list = dishService.list(queryWrapper);
 
-        return R.success(list);
+        List<DishDto> dishDtoList = list.stream().map(item -> {
+            DishDto dishDto = new DishDto();
+            BeanUtils.copyProperties(item, dishDto);
+            Long categoryId = item.getCategoryId(); //分类ID
+            //根据ID查询分类对象
+            Category category = categoryService.getById(categoryId);
+            if (category!=null) dishDto.setCategoryName(category.getName());
+
+            //查询口味
+            Long dishId =  item.getId();
+            LambdaQueryWrapper<DishFlavor> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.eq(DishFlavor::getDishId, dishId);
+            //SQL:select * from dish_flavor where dish_id = ?
+            List<DishFlavor> dishFlavorList = dishFlavorService.list(lambdaQueryWrapper);
+            if(dishFlavorList!=null) dishDto.setFlavors(dishFlavorList);
+
+            return dishDto;
+        }).collect(Collectors.toList());
+
+        return R.success(dishDtoList);
     }
 
 }
