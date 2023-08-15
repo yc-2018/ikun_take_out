@@ -1,42 +1,42 @@
-黑马瑞吉外卖项目笔记
+项目笔记
 
 # 整体介绍
 
-![Snipaste_2023-05-14_00-25-25](./黑马瑞吉外卖项目笔记.assets/Snipaste_2023-05-14_00-25-25.png)
+![Snipaste_2023-05-14_00-25-25](./项目笔记.assets/Snipaste_2023-05-14_00-25-25.png)
 
-![Snipaste_2023-05-14_00-26-45](./黑马瑞吉外卖项目笔记.assets/Snipaste_2023-05-14_00-26-45.png)
+![Snipaste_2023-05-14_00-26-45](./项目笔记.assets/Snipaste_2023-05-14_00-26-45.png)
 
-![Snipaste_2023-05-14_00-27-50](./黑马瑞吉外卖项目笔记.assets/Snipaste_2023-05-14_00-27-50.png)
+![Snipaste_2023-05-14_00-27-50](./项目笔记.assets/Snipaste_2023-05-14_00-27-50.png)
 
-![image-20230529171754142](./黑马瑞吉外卖项目笔记.assets/image-20230529171754142.png)
+![image-20230529171754142](./项目笔记.assets/image-20230529171754142.png)
 
-![image-20230529174713377](./黑马瑞吉外卖项目笔记.assets/image-20230529174713377.png)
+![image-20230529174713377](./项目笔记.assets/image-20230529174713377.png)
 
-![image-20230529175626247](./黑马瑞吉外卖项目笔记.assets/image-20230529175626247.png)
+![image-20230529175626247](./项目笔记.assets/image-20230529175626247.png)
 
 # 环境搭建
 
 ## 数据库
 
-![image-20230529175752640](./黑马瑞吉外卖项目笔记.assets/image-20230529175752640.png)
+![image-20230529175752640](./项目笔记.assets/image-20230529175752640.png)
 
 or
 
-![image-20230529175823210](./黑马瑞吉外卖项目笔记.assets/image-20230529175823210.png)
+![image-20230529175823210](./项目笔记.assets/image-20230529175823210.png)
 
 ### 导入sql
 
-![image-20230529180021006](./黑马瑞吉外卖项目笔记.assets/image-20230529180021006.png)
+![image-20230529180021006](./项目笔记.assets/image-20230529180021006.png)
 
 or
 
-![image-20230529180003940](./黑马瑞吉外卖项目笔记.assets/image-20230529180003940.png)
+![image-20230529180003940](./项目笔记.assets/image-20230529180003940.png)
 
 命令行方式导入 不要有中文，不然可能失败
 
 ### 数据库说明
 
-![image-20230529180257585](./黑马瑞吉外卖项目笔记.assets/image-20230529180257585.png)
+![image-20230529180257585](./项目笔记.assets/image-20230529180257585.png)
 
 ## Maven项目搭建
 
@@ -80,97 +80,97 @@ or
 
 # 业务开发（登录模块）
 
-![image-20230605020344527](./黑马瑞吉外卖项目笔记.assets/image-20230605020344527.png)
+![image-20230605020344527](./项目笔记.assets/image-20230605020344527.png)
 
-![image-20230605171610940](./黑马瑞吉外卖项目笔记.assets/image-20230605171610940.png)
+![image-20230605171610940](./项目笔记.assets/image-20230605171610940.png)
 
-![image-20230607012530614](./黑马瑞吉外卖项目笔记.assets/image-20230607012530614.png)
+![image-20230607012530614](./项目笔记.assets/image-20230607012530614.png)
 
 # 新增员工
 
-![image-20230607034852189](./黑马瑞吉外卖项目笔记.assets/image-20230607034852189.png)
+![image-20230607034852189](./项目笔记.assets/image-20230607034852189.png)
 
-![image-20230607035205053](./黑马瑞吉外卖项目笔记.assets/image-20230607035205053.png)
+![image-20230607035205053](./项目笔记.assets/image-20230607035205053.png)
 
-![image-20230607223657201](./黑马瑞吉外卖项目笔记.assets/image-20230607223657201.png)
+![image-20230607223657201](./项目笔记.assets/image-20230607223657201.png)
 
-![image-20230607230043113](./黑马瑞吉外卖项目笔记.assets/image-20230607230043113.png)
+![image-20230607230043113](./项目笔记.assets/image-20230607230043113.png)
 
-![image-20230607230214007](./黑马瑞吉外卖项目笔记.assets/image-20230607230214007.png)
+![image-20230607230214007](./项目笔记.assets/image-20230607230214007.png)
 
 # 员工信息分页查询
 
-![image-20230607230828987](./黑马瑞吉外卖项目笔记.assets/image-20230607230828987.png)
+![image-20230607230828987](./项目笔记.assets/image-20230607230828987.png)
 
-![image-20230608010059310](./黑马瑞吉外卖项目笔记.assets/image-20230608010059310.png)
+![image-20230608010059310](./项目笔记.assets/image-20230608010059310.png)
 
 
 
 # 启or禁用员工账号
 
-![image-20230608025202418](./黑马瑞吉外卖项目笔记.assets/image-20230608025202418.png)
+![image-20230608025202418](./项目笔记.assets/image-20230608025202418.png)
 
-![image-20230608032038100](./黑马瑞吉外卖项目笔记.assets/image-20230608032038100.png)
+![image-20230608032038100](./项目笔记.assets/image-20230608032038100.png)
 
-## ![image-20230608031950544](./黑马瑞吉外卖项目笔记.assets/image-20230608032032752.png)mvc的消息转换器
+## ![image-20230608031950544](./项目笔记.assets/image-20230608032032752.png)mvc的消息转换器
 
 js里面的long类型16位后会丢失精度，所以我们传过去之前就可以先变成字符串
 
-![image-20230608034128912](./黑马瑞吉外卖项目笔记.assets/image-20230608034128912.png)
+![image-20230608034128912](./项目笔记.assets/image-20230608034128912.png)
 
 # 编辑员工信息
 
-![image-20230608162431006](./黑马瑞吉外卖项目笔记.assets/image-20230608162431006.png)
+![image-20230608162431006](./项目笔记.assets/image-20230608162431006.png)
 
 # 分类管理业务开发
 
-![image-20230608172252796](./黑马瑞吉外卖项目笔记.assets/image-20230608172252796.png)
+![image-20230608172252796](./项目笔记.assets/image-20230608172252796.png)
 
 ## 公共字段自动填充
 
-![image-20230609004011245](./黑马瑞吉外卖项目笔记.assets/image-20230609004011245.png)
+![image-20230609004011245](./项目笔记.assets/image-20230609004011245.png)
 
 ### 代码实现
 
-![image-20230609004139705](./黑马瑞吉外卖项目笔记.assets/image-20230609004139705.png)
+![image-20230609004139705](./项目笔记.assets/image-20230609004139705.png)
 
-![image-20230609004819637](./黑马瑞吉外卖项目笔记.assets/image-20230609004819637.png)
+![image-20230609004819637](./项目笔记.assets/image-20230609004819637.png)
 
-![image-20230609011426267](./黑马瑞吉外卖项目笔记.assets/image-20230609011426267.png)
+![image-20230609011426267](./项目笔记.assets/image-20230609011426267.png)
 
-![image-20230609011631742](./黑马瑞吉外卖项目笔记.assets/image-20230609011631742.png)
+![image-20230609011631742](./项目笔记.assets/image-20230609011631742.png)
 
- ![image-20230609011830469](./黑马瑞吉外卖项目笔记.assets/image-20230609011830469.png)
+ ![image-20230609011830469](./项目笔记.assets/image-20230609011830469.png)
 
 ## 新增分类
 
-![image-20230609020605274](./黑马瑞吉外卖项目笔记.assets/image-20230609020605274.png)
+![image-20230609020605274](./项目笔记.assets/image-20230609020605274.png)
 
 ### 代码开发
 
-![image-20230609021949647](./黑马瑞吉外卖项目笔记.assets/image-20230609021949647.png)
+![image-20230609021949647](./项目笔记.assets/image-20230609021949647.png)
 
 ### 分页信息分页查询
 
-![image-20230609153412871](./黑马瑞吉外卖项目笔记.assets/image-20230609153412871.png)
+![image-20230609153412871](./项目笔记.assets/image-20230609153412871.png)
 
 ### 删除分类
 
-![image-20230609160040211](./黑马瑞吉外卖项目笔记.assets/image-20230609160040211.png)
+![image-20230609160040211](./项目笔记.assets/image-20230609160040211.png)
 
-![image-20230609160253654](./黑马瑞吉外卖项目笔记.assets/image-20230609160253654.png)
+![image-20230609160253654](./项目笔记.assets/image-20230609160253654.png)
 
-![image-20230609161123064](./黑马瑞吉外卖项目笔记.assets/image-20230609161123064.png)
+![image-20230609161123064](./项目笔记.assets/image-20230609161123064.png)
 
 # 菜品管理业务开发
 
-![image-20230609175504354](./黑马瑞吉外卖项目笔记.assets/image-20230609175504354.png)
+![image-20230609175504354](./项目笔记.assets/image-20230609175504354.png)
 
 ## 文件上传下载
 
-![image-20230609175610693](./黑马瑞吉外卖项目笔记.assets/image-20230609175610693.png)
+![image-20230609175610693](./项目笔记.assets/image-20230609175610693.png)
 
-![image-20230609175835583](./黑马瑞吉外卖项目笔记.assets/image-20230609175835583.png)
+![image-20230609175835583](./项目笔记.assets/image-20230609175835583.png)
 
 ```java
 //仰晨study 创建时间2023/6/10 0:55 星期六
@@ -260,15 +260,15 @@ public class CommonController {
 
 ## 新增菜品
 
-![image-20230610023032902](./黑马瑞吉外卖项目笔记.assets/image-20230610023032902.png)
+![image-20230610023032902](./项目笔记.assets/image-20230610023032902.png)
 
-![image-20230610025414410](./黑马瑞吉外卖项目笔记.assets/image-20230610025414410.png)
+![image-20230610025414410](./项目笔记.assets/image-20230610025414410.png)
 
-![image-20230610030751374](./黑马瑞吉外卖项目笔记.assets/image-20230610030751374.png)
+![image-20230610030751374](./项目笔记.assets/image-20230610030751374.png)
 
-![image-20230611172030205](./黑马瑞吉外卖项目笔记.assets/image-20230611172030205.png)
+![image-20230611172030205](./项目笔记.assets/image-20230611172030205.png)
 
-![image-20230611182358106](./黑马瑞吉外卖项目笔记.assets/image-20230611182358106.png)
+![image-20230611182358106](./项目笔记.assets/image-20230611182358106.png)
 
 
 
@@ -325,7 +325,7 @@ public class CommonController {
 
 ## 修改菜品
 
-![image-20230612023351513](./黑马瑞吉外卖项目笔记.assets/image-20230612023351513.png)
+![image-20230612023351513](./项目笔记.assets/image-20230612023351513.png)
 
 
 
@@ -333,13 +333,13 @@ public class CommonController {
 
 # 新增套餐
 
-![image-20230613011405332](./黑马瑞吉外卖项目笔记.assets/image-20230613011405332.png)
+![image-20230613011405332](./项目笔记.assets/image-20230613011405332.png)
 
 
 
 
 
-![image-20230613011557627](./黑马瑞吉外卖项目笔记.assets/image-20230613011557627.png)
+![image-20230613011557627](./项目笔记.assets/image-20230613011557627.png)
 
 
 
@@ -374,7 +374,7 @@ public class CommonController {
 
 系统中的套餐数据很多的时候，如果在一个页面中全部展示出来会显得比较乱，不便于查看，所以一般的系统中都会以分页的方式来展示列表数据
 
-![image-20230614020627158](./黑马瑞吉外卖项目笔记.assets/image-20230614020627158.png)
+![image-20230614020627158](./项目笔记.assets/image-20230614020627158.png)
 
 
 
@@ -383,7 +383,7 @@ public class CommonController {
 **需求分析**
 在套餐管理列表页面点击删除按钮，可以删除对应的套餐信息。也可以通过复选框选择多个套餐，点击批量删除按钮一次删除多个套餐。注意，对于状态为**售卖中的套餐不能删除**，需要先停售，然后才能删除。
 
-![image-20230614230343041](./黑马瑞吉外卖项目笔记.assets/image-20230614230343041.png)
+![image-20230614230343041](./项目笔记.assets/image-20230614230343041.png)
 
 
 
@@ -491,13 +491,13 @@ public class CommonController {
 
 ## 菜品展示
 
-![image-20230616015933928](./黑马瑞吉外卖项目笔记.assets/image-20230616015933928.png)
+![image-20230616015933928](./项目笔记.assets/image-20230616015933928.png)
 
 
 
 ## 购物车
 
-![image-20230616024639775](./黑马瑞吉外卖项目笔记.assets/image-20230616024639775.png)
+![image-20230616024639775](./项目笔记.assets/image-20230616024639775.png)
 
 > 代码开发-梳理交互过程
 > 在开发代码之前，需要梳理一下购物车操作时前端页面和服务端的交互过程:
@@ -541,3 +541,114 @@ public class CommonController {
 > 业务层实现类 OrderServicelmpl、OrderDetailServicelmpl
 >
 > 控制层 OrderController、OrderDetailController
+
+
+
+
+
+# Spring Cache
+
+![image-20230815091541278](README.assets/image-20230815091541278.png)
+
+![image-20230815091734828](README.assets/image-20230815091734828.png)
+
+
+
+
+
+## 缓存套餐数据
+
+**实现思路**
+
+前面我们已经实现了移动端套餐查看功能，对应的服务端方法为SetmealController的list方法，此方法会根据前端提交的查询条件进行数据库查询操作。在高并发的情况下，频繁查询数据库会导致系统性能下降，服务端响应时间增长现在需要对此方法进行缓存优化，提高系统的性能。
+具体的实现思路如下:
+1、导入Spring Cache和Redis相关maven坐标
+
+2、在application.yml中配置缓存数据的过期时间
+
+3、在启动类上加入@EnableCaching注解，开启缓存注解功能
+
+4、在SetmealController的list方法上加入@Cacheable注解
+
+5、在SetmealController的save和delete方法上加入CacheEvict注解
+
+
+
+> <dependency>
+>     <groupId>org.springframework.boot</groupId>
+>     <artifactId>spring-boot-starter-cache</artifactId>
+> </dependency>
+>
+> <dependency>
+>     <groupId>org.springframework.boot</groupId>
+>     <artifactId>spring-boot-starter-data-redis</artifactId>
+> </dependency>
+
+
+
+> redis:
+>   host: 127.0.0.1
+>   port: 6379
+>   password: 123456
+>   database: 0
+> cache:
+>   redis:
+>     time-to-live: 1800000 *#设置缓存过期时间，可选*
+
+
+
+启动类
+
+> @EnableCaching  //开启缓存注解功能
+
+
+
+```diff
+ /**
+      * 根据套餐分类id给出套餐列表
+      */
+     @GetMapping("/list")
++    @Cacheable(value = "setmealCache",key = "#setmeal.categoryId+'_'+ #setmeal.status")
+     public R<List<Setmeal>> list(Setmeal setmeal) {
+         LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
+         queryWrapper.eq(setmeal.getCategoryId() != null, Setmeal::getCategoryId, setmeal.getCategoryId());
+         queryWrapper.eq(setmeal.getStatus() != null, Setmeal::getStatus, setmeal.getStatus());
+         queryWrapper.orderByDesc(Setmeal::getUpdateTime);
+ 
+         return R.success(setmealService.list(queryWrapper));
+     }
+```
+
+
+
+```diff
+ /**
+     * 新增套餐
+     */
+    @PostMapping
++   @CacheEvict(value = "setmealCache",allEntries = true)
+    public R<String> save(@RequestBody SetmealDto setmealDto) {
+        log.info("新增套餐信息:{}", setmealDto);
+        setmealService.saveWithDish(setmealDto);
+        return R.success("添加套餐成功");
+    }
+```
+
+
+
+```diff
+/**
+     * 批量/删除套餐
+     * 不能简单就删套餐表，还有菜品关联表，还要判断是不是停售（停售才允许删）
+     * @param ids 套餐id（可以多个）
+     * @return 简单提示
+     */
+    @DeleteMapping
++   @CacheEvict(value = "setmealCac",allEntries = true)
+    public R<String> delete(@RequestParam("ids")List<Long> ids) {
+        log.info("准备要删除的套餐id有:{}",ids);
+        setmealService.removeWithDish(ids);
+        return R.success("删除套餐成功");
+    }
+```
+

@@ -12,6 +12,8 @@ import org.ikun.service.CategoryService;
 import org.ikun.service.SetmealService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +36,7 @@ public class SetmealController {
      * 新增套餐
      */
     @PostMapping
+    @CacheEvict(value = "setmealCache",allEntries = true)    //allEntries = true 表示清除缓存中所有键对应的值,相当于清空整个缓存。
     public R<String> save(@RequestBody SetmealDto setmealDto) {
         log.info("新增套餐信息:{}", setmealDto);
         setmealService.saveWithDish(setmealDto);
@@ -88,6 +91,7 @@ public class SetmealController {
      * @return 简单提示
      */
     @DeleteMapping
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> delete(@RequestParam("ids")List<Long> ids) {
         log.info("准备要删除的套餐id有:{}",ids);
         setmealService.removeWithDish(ids);
@@ -98,6 +102,7 @@ public class SetmealController {
      * 根据套餐分类id给出套餐列表
      */
     @GetMapping("/list")
+    @Cacheable(value = "setmealCache",key = "#setmeal.categoryId+'_'+ #setmeal.status")
     public R<List<Setmeal>> list(Setmeal setmeal) {
         LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(setmeal.getCategoryId() != null, Setmeal::getCategoryId, setmeal.getCategoryId());
