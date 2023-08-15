@@ -644,7 +644,7 @@ public class CommonController {
      * @return 简单提示
      */
     @DeleteMapping
-+   @CacheEvict(value = "setmealCac",allEntries = true)
++   @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> delete(@RequestParam("ids")List<Long> ids) {
         log.info("准备要删除的套餐id有:{}",ids);
         setmealService.removeWithDish(ids);
