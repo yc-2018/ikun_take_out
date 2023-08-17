@@ -652,3 +652,214 @@ public class CommonController {
     }
 ```
 
+
+
+
+
+# 读写分离
+
+![image-20230816094151356](README.assets/image-20230816094151356.png)
+
+
+
+
+
+
+
+## 主从复制
+
+> MySQL主从复制是一个异步的复制过程，底层是基于Mysql数据库自带的**二进制日志**功能。就是一台或多台MySOL数据库(slave，即**从库**)从另一台MySL数据库(master，即**主库**)进行日志的复制然后再解析日志并应用到自身，最终实现**从库**的数据和**主库**的数据保持一致。MVSOL主从复制是MVSOL数据库自带功能，无需借助第三方工具。
+>
+> ![image-20230816113151411](README.assets/image-20230816113151411.png)
+
+
+
+### 配置-主库Master
+
+![image-20230816124424925](README.assets/image-20230816124424925.png)
+
+```toml
+[mysqld]
+server-id=100		# 主库唯一ID 
+log-bin=mysql-bin 	# 开启二进制日志 
+```
+
+```bash
+# 方法一：正常用这个命令就行
+systemctl restart mysqld
+
+# 方法二：在一个非systemd的系统上,比如较老的Debian/Ubuntu版本默认使用sysvinit,或者在Docker容器环境下。
+service mysql restart
+```
+
+
+
+![image-20230816124508213](README.assets/image-20230816124508213.png)
+
+```sql
+GRANT REPLICATION SLAVE ON *.* TO 'xiaoheizi'@'%' IDENTIFIED BY 'Root@123456';
+```
+
+
+
+![image-20230816124644452](README.assets/image-20230816124644452.png)
+
+```sql
+show master status;
+```
+
+
+
+
+
+
+### 配置-从库Slave
+
+![image-20230816125150697](README.assets/image-20230816125150697.png)
+
+![image-20230816125427249](README.assets/image-20230816125427249.png)
+
+```bash
+CHANGE MASTER TO
+MASTER_HOST='172.23.72.37',  
+MASTER_PORT=3333,
+MASTER_USER='xiaoheizi',
+MASTER_PASSWORD='Root@123456',  
+MASTER_LOG_FILE='mysql-bin.000001',
+MASTER_LOG_POS=442;
+```
+
+```sql
+start slave;
+```
+
+
+
+
+
+> 注意事项
+>
+> ![image-20230816125833343](README.assets/image-20230816125833343.png)
+
+​		
+
+![image-20230816130048575](README.assets/image-20230816130048575.png)
+
+​				（会有很多，看上面4列就好了，自己看不清可以复制到文本编辑器里面看）
+
+```sql
+show slave status;
+```
+
+
+
+## 读写分离
+
+> **背景**
+>
+> 面对日益增加的系统访问量，数据库的吞吐量面临着巨大瓶颈。对于同一时刻有大量并发读操作和较少写操作类型的应用系统来说，将数据库拆分为**主库**和**从库**，主库负责处理事务性的增删改操作，从库负责处理查询操作，能够有效的避免由数据更新导致的行锁，使得整个系统的查询性能得到极大的改善。
+
+### Sharding-JDBC
+
+> sharding-JDBC定位为轻量级java框架，在java的JDBC层提供的额外服务。它使用客户端直连数据库，以jar包形式提供服务，无需额外部署和依赖，可理解为增强版的JDBC驱动，完全兼容JDBC和各种ORM框架使用sharding-JDBC可以在程序中轻松的实现数据库读写分离。
+>
+> - 适用于任何基于DBC的ORM框架，如: JPA,Hibernate, Mybatis,Spring JDBCTemplate或直接使用JDBC。
+> - 支持任何第三方的数据库连接池，如: DBCP,C3PO,BoneCP,Druid,HikariCP等。
+> - 支持任意实现IDBC规范的数据库。目前支持MySQL，Oracle，SQLServer，PostgreSQL以及任何遵循SQL92标准的数据库。
+
+
+
+**开始示例**
+
+> 使用ShardingJDBC实现读写分离步骤:
+> 1、导入maven坐标
+>
+> 2、在配置文件中配置读写分离规则
+>
+> 3、在配置文件中配置**允许bean定义覆盖**配置项
+
+主库创建数据库，看看从库会不会
+
+![image-20230816221757380](README.assets/image-20230816221757380.png)
+
+
+
+
+
+>         <dependency>
+>             <groupId>org.apache.shardingsphere</groupId>
+>             <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+>             <version>4.0.0-RC1</version>
+>         </dependency>
+
+
+
+```yaml
+spring:
+  shardingsphere:
+    datasource:
+      names:
+        master,slave
+      # 主数据源
+      master:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://192.168.138.100:3306/rw?characterEncoding=utf-8
+        username: root
+        password: root
+      # 从数据源
+      slave:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://192.168.138.101:3306/rw?characterEncoding=utf-8
+        username: root
+        password: root
+    masterslave:
+      # 读写分离配置
+      load-balance-algorithm-type: round_robin #轮询
+      # 最终的数据源名称
+      name: dataSource
+      # 主库数据源名称
+      master-data-source-name: master
+      # 从库数据源名称列表，多个逗号分隔
+      slave-data-source-names: slave
+    props:
+      sql:
+        show: true #开启SQL显示，默认false
+  main:
+    allow-bean-definition-overriding: true
+```
+
+> 评论区：mysql8版本记得在url配置useSSL=false
+
+
+
+
+
+在配置文件中配置**允许bean定义覆盖**配置项
+
+```diff
+    masterslave:
+      # 读写分离配置
+      load-balance-algorithm-type: round_robin #轮询
+      # 最终的数据源名称
+      name: dataSource
+      # 主库数据源名称
+      master-data-source-name: master
+      # 从库数据源名称列表，多个逗号分隔
+      slave-data-source-names: slave
+    props:
+      sql:
+        show: true #开启SQL显示，默认false
++ main:
++   allow-bean-definition-overriding: true
+```
+
+
+
+
+
+
+
+
+
