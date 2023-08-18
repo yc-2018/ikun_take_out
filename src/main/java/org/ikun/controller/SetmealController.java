@@ -3,6 +3,10 @@ package org.ikun.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.ikun.common.R;
 import org.ikun.dto.SetmealDto;
@@ -24,6 +28,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @RestController
+@Api(tags = "套餐相关接口")
 @RequestMapping("/setmeal")
 public class SetmealController {
     @Autowired
@@ -36,6 +41,7 @@ public class SetmealController {
      * 新增套餐
      */
     @PostMapping
+    @ApiOperation(value = "新增套餐接口")
     @CacheEvict(value = "setmealCache",allEntries = true)    //allEntries = true 表示清除缓存中所有键对应的值,相当于清空整个缓存。
     public R<String> save(@RequestBody SetmealDto setmealDto) {
         log.info("新增套餐信息:{}", setmealDto);
@@ -52,6 +58,12 @@ public class SetmealController {
      * @return 一页套餐数据，因为本类不存在套餐分类名称所以要用到dto
      */
     @GetMapping("/page")
+    @ApiOperation(value = "套餐分页查询接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page",    value = "页码",     required = true),
+            @ApiImplicitParam(name = "pageSize",value = "每页展示数",required = true),
+            @ApiImplicitParam(name = "name",    value = "套餐名称",  required = false)
+    })
     public R<Page> page(Integer page, Integer pageSize, String name) {
         //分页构造器
         Page<Setmeal> setmealPage = new Page<>(page,pageSize);
@@ -91,6 +103,7 @@ public class SetmealController {
      * @return 简单提示
      */
     @DeleteMapping
+    @ApiOperation(value = "批量/删除套餐接口")
     @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> delete(@RequestParam("ids")List<Long> ids) {
         log.info("准备要删除的套餐id有:{}",ids);
@@ -102,6 +115,7 @@ public class SetmealController {
      * 根据套餐分类id给出套餐列表
      */
     @GetMapping("/list")
+    @ApiOperation(value = "套餐列表接口")
     @Cacheable(value = "setmealCache",key = "#setmeal.categoryId+'_'+ #setmeal.status")
     public R<List<Setmeal>> list(Setmeal setmeal) {
         LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
