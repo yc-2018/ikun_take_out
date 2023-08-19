@@ -863,3 +863,621 @@ spring:
 
 
 
+# Nginx
+
+> - Nginx概述
+> - Nginx命令
+> - Nginx配置文件结构
+> - Nginx具体应用
+
+
+
+## Nginx概述
+
+> - Nginx介绍
+>
+> - Nginx下载和安装
+>
+> - Nginx目录结构
+
+
+
+### Nginx介绍
+
+> ​	Nginx是一款轻量级的web 服务器/反向代理服务器及电子邮件(IMAP/POP3)代理服务器。其特点是占有内存少，并发能力强，事实上nginx的并发能力在同类型的网页服务器中表现较好，中国大陆使用nginx的网站有:百度、京东新浪、网易、腾讯、淘宝等。
+>
+> ​	Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点(俄文: Pam6nep)开发的，第一个公开版本0.1.0发布于2004年10月4日。
+> 官网: https://nginx.org/
+
+
+
+### Nginx下载和安装
+
+> 安装过程:
+> 1、安装依赖包 yum -y install gcc pcre-devel zlib-devel openssl openssl-devel
+>
+> 2、下载Nginx安装包wget https://nginx.org/download/nginx-1.16.1.tar.gz
+>
+> 3、解压 tar -zxvf nginx-1.16.1.tar.gz
+>
+> 4、cd nginx-1.16.1
+>
+> 5、./configure --prefix=/usr/local/nginx
+>
+> 6、make && make install
+>
+> ==如果是Ubuntu就按下面方法来==
+>
+> 您提供的从源码编译安装Nginx的方法,在Ubuntu上操作步骤如下:
+>
+> 1. 安装编译依赖包:
+>
+> ```
+> sudo apt install build-essential libpcre3 libpcre3-dev zlib1g-dev openssl libssl-dev
+> ```
+>
+> 2. 下载Nginx源码包:
+>
+> ```
+> wget https://nginx.org/download/nginx-1.16.1.tar.gz
+> ```
+>
+> 3. 解压缩:
+>
+> ```
+> tar -zxvf nginx-1.16.1.tar.gz
+> ```
+>
+> 4. 进入目录:
+>
+> ```
+> cd nginx-1.16.1
+> ```
+>
+> 5. 配置并指定安装路径为/usr/local/nginx:
+>
+> ```
+> ./configure --prefix=/usr/local/nginx
+> ```
+>
+> 6. 编译安装:
+>
+> ```
+> make
+> sudo make install
+> ```
+>
+> 7. 启动Nginx:
+>
+> ```
+> /usr/local/nginx/sbin/nginx
+> ```
+>
+> 主要差异是Ubuntu使用apt安装编译工具和依赖包,而不是yum。另配置时指定了标准的安装路径/usr/local/nginx,不需要其他特殊配置。
+>
+> 这种源码编译方式可以自行控制Nginx的配置和优化参数。
+
+
+
+### Nginx目录结构
+
+看树形结构
+
+```
+root@yc2023:/usr/local/nginx# apt install tree     
+root@yc2023:/usr/local/nginx# tree
+.
+├── conf
+│   ├── fastcgi.conf
+│   ├── fastcgi.conf.default
+│   ├── fastcgi_params
+│   ├── fastcgi_params.default
+│   ├── koi-utf
+│   ├── koi-win
+│   ├── mime.types
+│   ├── mime.types.default
+│   ├── nginx.conf
+│   ├── nginx.conf.default
+│   ├── scgi_params
+│   ├── scgi_params.default
+│   ├── uwsgi_params
+│   ├── uwsgi_params.default
+│   └── win-utf
+├── html
+│   ├── 50x.html
+│   └── index.html
+├── logs
+└── sbin
+    └── nginx
+
+4 directories, 18 files
+```
+
+![image-20230818004418745](README.assets/image-20230818004418745.png)
+
+
+
+## Nginx命令
+
+### 查看版本
+
+```
+root@yc2023:/usr/local/nginx/sbin# ./nginx -v                                                               
+nginx version: nginx/1.16.1   
+```
+
+### 检查配置文件正确性
+
+在启动Nginx服务之前，可以先检查一下conf/nginx.conf文件配置的是否有错误，命令如下:
+
+```
+root@yc2023:/usr/local/nginx/sbin# ./nginx -t                                                               
+nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok                                 
+nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful    
+```
+
+
+
+### 启动和停止
+
+```bash
+# 启动Nginx服务使用如下命令:
+./nginx
+# 停止Nginx服务使用如下命令:
+./nginx -s stop
+# 启动完成后可以查看Nginx进程:
+ps -ef | grep nginx
+```
+
+
+
+![image-20230818012459222](README.assets/image-20230818012459222.png)
+
+运行起来的时候nginx.pid文件就是记录他的进程号的
+
+
+
+
+
+
+
+
+
+### 重新加载配置文件
+
+当修改Nginx配置文件后，需要重新加载才能生效，可以使用下面命令重新加载配置文件
+
+```
+./nginx -s reload     
+```
+
+
+
+
+
+
+
+## Nginx配置文件结构
+
+**整体结构介绍**
+
+![image-20230818105915204](README.assets/image-20230818105915204.png)
+
+
+
+
+
+## Nginx具体应用
+
+### 部署静态资源
+
+> **Nginx**可以作为静态web服务器来部署静态资源。`静态资源`指在服务端真实存在并且能够直接展示的一些文件，比如常见的htm[页面、css文件、js文件、图片、视频等资源。相对于Tomcat，Nginx处理静态资源的能力更加高效，所以在生产环境下，一般都会将静态资源部署到`Nginx`中。将静态资源部署到Nginx非常简单，只需要将文件复制到Nginx安装目录下的html目录中即可。
+>
+> ```
+> server {
+> 	listen 80;				# 监听端口
+> 	server_name localhost;	# 服务器名称
+> 	location / {			# 匹配客户端请求url
+> 		root.html;			# 指定静态资源根目录
+> 		index index.html;	# 指定默认首页
+> 	}
+> }
+> ```
+
+
+
+### 反向代理
+
+
+
+![image-20230818123220137](README.assets/image-20230818123220137.png)
+
+![image-20230818123515152](README.assets/image-20230818123515152.png)
+
+![image-20230818123742363](README.assets/image-20230818123742363.png)
+
+
+
+### 负载均衡
+
+
+
+> 早期的网站流量和业务功能都比较简单，单台服务器就可以满足基本需求，但是随着互联网的发展，业务流量越来越大并且业务逻辑也越来越复杂，单台服务器的性能及单点故障问题就凸显出来了，因此需要多台服务器组成应用集群进行性能的水平扩展以及避免单点故障出现。
+>
+> - 应用集群:将同一应用部署到多台机器上，组成应用集群，接收负载均衡器分发的请求，进行业务处理并返回响应数据
+>
+> - 负载均衡器:将用户请求根据对应的负载均衡算法分发到应用集群中的一台服务器进行处理
+
+
+
+![image-20230818141718642](README.assets/image-20230818141718642.png)
+
+
+
+![image-20230818142143595](README.assets/image-20230818142143595.png)
+
+
+
+**负载均衡策略**
+
+![image-20230818152109822](README.assets/image-20230818152109822.png)
+
+默认权重都是1
+
+![image-20230818151635429](README.assets/image-20230818151635429.png)
+
+
+
+
+
+
+
+# 前后端分离开发
+
+### 开发流程
+
+![image-20230818163337672](README.assets/image-20230818163337672.png)
+
+
+
+### 前端技术栈
+
+> **开发工具**
+>
+> - Visual Studio Code
+>
+> - hbuilder
+>
+> **技术框架**
+>
+> - nodejs
+>
+> - VUE
+>
+> - ElementUl
+>
+> - mock
+>
+> - webpack
+
+
+
+## Yapi
+
+> **介绍**
+>
+> YApi 是高效、易用、功能强大的 api 管理平台，旨在为开发、产品、测试人员提供更优雅的接口管理服务。可以帮助开发者轻松创建、发布、维护 APL，YApi 还为用户提供了优秀的交互体验，开发人员只需利用平台提供的接口数据写入工具以及简单的点击操作就可以实现接口的管理。YApi让接口开发更简单高效，让接口的管理更具可读性、可维护性，让团队协作更合理
+>
+> 源码地址: https://github.com/YMFE/yapi
+>
+> 要使用YApi，需要自己进行部署
+
+**==所以我选择APIfox==**
+
+
+
+
+
+## Swagger
+
+### 介绍
+
+> 使用Swagger你只需要按照它的规范去定义接口及接口相关的信息，再通过Swagger衍生出来的一系列项目和工具就可以做到生成各种格式的接口文档，以及在线接口调试页面等等。
+>
+> 官网:https://swagger.io/
+
+
+
+> ==`knife4j`是为Java MVC框架集成Swagger生成Api文档的增强解决方案==
+
+
+
+### 使用方式
+
+> 操作步骤:
+> 1、导入knife4j的maven坐标
+> ```xml
+> <dependency>
+>  <groupId>com.github.xiaoymin</groupId>
+>  <artifactId>knife4j-spring-boot-starter</artifactId>
+>  <version>3.0.2</version>
+> </dependency>
+> ```
+>
+> 
+>
+> 2、导入knife4j相关配置类
+>
+> >导入knife4j相关配置 (WebMvcConfig)
+> >
+> >```diff
+> >  @Slf4j
+> >  @Configuration
+> >+@EnableSwagger2
+> >+@EnableKnife4j
+> >  public class WebMvcConfig extends WebMvcConfigurationSupport {
+> >	
+> >	.............
+> >	
+> >+     @Bean
+> >+     public Docket createRestApi() {
+> >+         //文档类型
+> >+         return new Docket(DocumentationType.SWAGGER_2)
+> >+                 .apiInfo(apiInfo())
+> >+                 .select()
+> >+                 .apis(RequestHandlerSelectors.basePackage("org.ikun.controller"))
+> >+                 .paths(PathSelectors.any())
+> >+                 .build();
+> >+     }
+> >+ 
+> >+     private ApiInfo apiInfo() {
+> >+         return new ApiInfoBuilder()
+> >+                 .title("ikun外卖")
+> >+                 .version("1.0")
+> >+                 .description("ikun外卖接口文档")
+> >+                 .build();
+> >+     }
+> >
+> >}
+> >```
+> >
+> >
+>
+> 3、设置静态资源，否则接口文档页面无法访问
+>
+> >设置静态资源映射 (WebMvcConfig类中的addResourceHandlers方法)，否则接口文档页面无法访问
+> >
+> >`registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");`
+> >`registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");`
+> >
+> >```diff
+> > @Slf4j
+> > @Configuration
+> > @EnableSwagger2
+> > @EnableKnife4j
+> > public class WebMvcConfig extends WebMvcConfigurationSupport {
+> > 
+> >     /**
+> >      * 设置静态资源映射
+> >      * */
+> > 
+> >     @Override
+> >     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+> >         log.info("开始静态资源映射");
+> >+        registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
+> >+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+> > 
+> >         // 访问backend及下面的路径就映射到resources下面的backend文件夹
+> >         registry.addResourceHandler("/backend/**").addResourceLocations("classpath:/backend/");
+> >         registry.addResourceHandler("/front/**").addResourceLocations("classpath:/front/");
+> >     }
+> > }
+>
+> ​	4、在LoginCheckFilter中设置不需要处理的请求路径
+>
+> >非必须，就是配置了可以在非登录状态访问
+>
+> >```diff
+> >@Slf4j
+> >@WebFilter(filterName = "loginCheckFilter",urlPatterns = "/*")
+> >public class LoginCheckFilter implements Filter {
+> >
+> >    /**
+> >     * 路径匹配器，支持通配符
+> >     */
+> >    public static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
+> >    @Override
+> >    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+> >        HttpServletRequest request = (HttpServletRequest) servletRequest;
+> >        HttpServletResponse response = (HttpServletResponse) servletResponse;
+> >        log.info("拦截到请求:{},他的URL是{}",request.getRequestURI(),request.getRequestURL());
+> >        /*
+> >        * 1、获取本次请求的URI
+> >        * 2、判断本次请求是否需要处理
+> >        * 3、如果不需要处理，则直接放行
+> >        * 4、判断登录状态，如果已登录，则直接放行
+> >        * 5、如果未登录则返回未登录结果
+> >        * */
+> >
+> >        //1--------------------------获取本次请求的URI
+> >        String requestURI = request.getRequestURI();
+> >        //定义不需要处理的请求
+> >        String[] urls = {
+> >                "/employee/login",
+> >                "/employee/logout",
+> >                "/backend/**",
+> >                "/front/**",
+> >                "/common/**",
+> >                "/user/sendMsg",    //发送验证码
+> >                "/user/login",      //客户端登录
+> >+               "/doc.html",
+> >+               "/webjars/**",
+> >+               "/swagger-resources",
+> >+               "/v2/api-docs"
+> >        };
+> >        .........................
+> >```
+
+
+
+![image-20230819021056370](README.assets/image-20230819021056370.png)
+
+![image-20230819022746464](README.assets/image-20230819022746464.png)
+
+![image-20230819023512346](README.assets/image-20230819023512346.png)
+
+
+
+### 常用注解
+
+​			注解															说明
+@Api											用在请求的类上，例如Controller，表示对类的说明
+@ApiModel						 	    用在类上，通常是实体类，表示一个返回响应数据的信息
+@ApiModelProperty				 用在属性上，描述响应类的属性
+@ApiOperation						  用在请求的方法上，说明方法的用途、作用
+@ApilmplicitParams			     用在请求的方法上，表示一组参数说明
+@ApilmplicitParam				   用在@ApilmplicitParams注解中，指定一个请求参数的各个方面
+
+
+
+```diff
+ package org.ikun.entity;
+ ......
+ 
+ @Data
++@ApiModel("套餐")
+ public class Setmeal implements Serializable {
+ 
+     private static final long serialVersionUID = 1L;
+ 
++    @ApiModelProperty("主键")
+     private Long id;
+ 
+     //分类id
++    @ApiModelProperty("分类id")
+     private Long categoryId;
+ 
+ 
+     //套餐名称
++    @ApiModelProperty("套餐名称")
+     private String name;
+ 
+ 
+     //套餐价格
++    @ApiModelProperty("套餐价格")
+     private BigDecimal price;
+      ......
+ ......
+```
+
+```diff
+ @Slf4j
+ @RestController
++@Api(tags = "套餐相关接口")
+ @RequestMapping("/setmeal")
+ public class SetmealController {
+     @Autowired
+     private SetmealService setmealService;
+ 
+     @Autowired
+     private CategoryService categoryService;//分类
+ 
+     @PostMapping
++    @ApiOperation(value = "新增套餐接口")
+     @CacheEvict(value = "setmealCache",allEntries = true)    //allEntries = true 表示清除缓存中所有键对应的值,相当于清空整个缓存。
+     public R<String> save(@RequestBody SetmealDto setmealDto) {
+         log.info("新增套餐信息:{}", setmealDto);
+         setmealService.saveWithDish(setmealDto);
+         return R.success("添加套餐成功");
+     }
+ 
+ 
+     @GetMapping("/page")
++    @ApiOperation(value = "套餐分页查询接口")
++    @ApiImplicitParams({
++            @ApiImplicitParam(name = "page",    value = "页码",     required = true),
++            @ApiImplicitParam(name = "pageSize",value = "每页展示数",required = true),
++            @ApiImplicitParam(name = "name",    value = "套餐名称",  required = false)
++    })
+     public R<Page> page(Integer page, Integer pageSize, String name) {
+         //分页构造器
+         Page<Setmeal> setmealPage = new Page<>(page,pageSize);
+         Page<SetmealDto> dtoPage = new Page<>();
+ 
+```
+
+
+
+![image-20230819030928408](README.assets/image-20230819030928408.png)
+
+![image-20230819031313634](README.assets/image-20230819031313634.png)
+
+## 项目部署
+
+### 部署架构
+
+![image-20230819031759952](README.assets/image-20230819031759952.png)
+
+
+
+### 部署环境说明
+
+![image-20230819031826434](README.assets/image-20230819031826434.png)
+
+### 部署前端项目
+
+![image-20230819032209783](README.assets/image-20230819032209783.png)
+
+![image-20230819032442885](README.assets/image-20230819032442885.png)
+
+### 部署后端项目
+
+![image-20230819033219688](README.assets/image-20230819033219688.png)
+
+![image-20230819033341195](README.assets/image-20230819033341195.png)
+
+```bash
+#!/bin/sh
+echo =================================
+echo  自动化部署脚本启动
+echo =================================
+
+echo 停止原来运行中的工程
+APP_NAME=reggie_take_out
+
+tpid=`ps -ef|grep $APP_NAME|grep -v grep|grep -v kill|awk '{print $2}'`
+if [ ${tpid} ]; then
+    echo 'Stop Process...'
+    kill -15 $tpid
+fi
+sleep 2
+tpid=`ps -ef|grep $APP_NAME|grep -v grep|grep -v kill|awk '{print $2}'`
+if [ ${tpid} ]; then
+    echo 'Kill Process!'
+    kill -9 $tpid
+else
+    echo 'Stop Success!'
+fi
+
+echo 准备从Git仓库拉取最新代码
+cd /usr/local/javaapp/reggie_take_out
+
+echo 开始从Git仓库拉取最新代码
+git pull
+echo 代码拉取完成
+
+echo 开始打包
+output=`mvn clean package -Dmaven.test.skip=true`
+
+cd target
+
+echo 启动项目
+nohup java -jar reggie_take_out-1.0-SNAPSHOT.jar &> reggie_take_out.log &
+echo 项目启动完成
+
+
+```
+
+![image-20230819033650583](README.assets/image-20230819033650583.png)
+
+第4步：本地部署时图片要改到服务器路径并把图片上传到对应路径
