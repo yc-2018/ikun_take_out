@@ -1429,6 +1429,43 @@ ps -ef | grep nginx
 ![image-20230819032209783](README.assets/image-20230819032209783.png)
 
 ![image-20230819032442885](README.assets/image-20230819032442885.png)
+```agsl
+worker_processes  2;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+    keepalive_timeout  65;
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        location / {
+            root   html/dist;
+            index  index.html;
+        }
+        
+        # 反向代理配置
+        location ^~ /api/  {
+		rewrite ^/api/(.*)$ /$1 break;
+		proxy_pass http://172.23.72.37:8080;
+	}
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+}
+```
+
 
 ### 部署后端项目
 

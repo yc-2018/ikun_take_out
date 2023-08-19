@@ -61,4 +61,4 @@ mybatis-plus:
       id-type: ASSIGN_ID
 
 reggit:
-  path: E:\Users\Dell\Desktop\img\
+  path: /usr/local/javaapp/img
