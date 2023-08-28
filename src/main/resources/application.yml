@@ -5,6 +5,7 @@ spring:
     #应用的名称，可选
     name: reggie_take_out
 
+
   shardingsphere:
     datasource:
       names:
@@ -47,8 +48,6 @@ spring:
   cache:
     redis:
       time-to-live: 1800000  # 设置缓存过期时间，可选
-
-
 
 
 mybatis-plus:
